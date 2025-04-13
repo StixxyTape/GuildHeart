@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://72g1f4vr1trg"]
+
+[ext_resource type="PackedScene" uid="uid://dgtr0rkbrbryg" path="res://TimeManager/TimeManager.tscn" id="1_4fe2n"]
+[ext_resource type="PackedScene" uid="uid://tpavesy2837r" path="res://Quest/Quest.tscn" id="1_fea0g"]
+[ext_resource type="PackedScene" uid="uid://450h2kw7i6da" path="res://ActionClock/ActionClock.tscn" id="2_2u6y5"]
+[ext_resource type="PackedScene" uid="uid://76hf4maesx5m" path="res://Hero/Hero.tscn" id="2_4fe2n"]
+
+[node name="TestLab" type="Node"]
+
+[node name="TimeManager" parent="." instance=ExtResource("1_4fe2n")]
+
+[node name="ActionClock" parent="." instance=ExtResource("2_2u6y5")]
+
+[node name="Quest" parent="." instance=ExtResource("1_fea0g")]
+
+[node name="Warrior" parent="Quest" instance=ExtResource("2_4fe2n")]
+tempo = 4
+
+[node name="Wizard" parent="Quest" instance=ExtResource("2_4fe2n")]
+tempo = 5
+
+[node name="Rogue" parent="Quest" instance=ExtResource("2_4fe2n")]
+tempo = 3
+
+[node name="CurrentHeroes" type="Node" parent="."]

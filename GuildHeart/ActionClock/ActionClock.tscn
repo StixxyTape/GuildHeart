@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://450h2kw7i6da"]
+
+[ext_resource type="Script" uid="uid://cu31gcdiblr8g" path="res://ActionClock/ActionClock.gd" id="1_c50do"]
+
+[node name="ActionClock" type="Node"]
+script = ExtResource("1_c50do")
+
+[node name="ActionTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="ActionTimer" to="." method="ActionTime"]
