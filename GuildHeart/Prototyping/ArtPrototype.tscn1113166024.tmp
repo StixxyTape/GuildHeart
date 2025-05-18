@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8xb88xxfl4rn"]
+
+[ext_resource type="PackedScene" uid="uid://b73awd17bimcr" path="res://MapGen/Scenes/MapGenerator.tscn" id="3_s0oit"]
+
+[node name="Node2D" type="Node"]
+
+[node name="Map Generator" parent="." instance=ExtResource("3_s0oit")]
+z_index = -1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(197, 95)
+zoom = Vector2(5.835, 5.835)

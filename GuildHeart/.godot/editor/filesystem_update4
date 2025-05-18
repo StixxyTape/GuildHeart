@@ -1,4 +1,5 @@
-res://Hero/Hero.tscn
-res://Hero/Hero.gd
-res://TestLab/TestLab.tscn
-res://UI/UI.gd
+res://Prototyping/ArtPrototype.tscn
+res://Shaders/Terrain/Grass/GrassWave.gdshader
+res://Shaders/Terrain/Water/Water.gdshader
+res://MapGen/Scenes/MapGenerator.tscn
+res://Shaders/Terrain/Water/Water3D.gdshader

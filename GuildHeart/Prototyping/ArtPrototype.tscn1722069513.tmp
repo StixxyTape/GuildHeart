@@ -1,0 +1,449 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8xb88xxfl4rn"]
+
+[ext_resource type="Texture2D" uid="uid://cgxwt5lhb7krr" path="res://MapGen/Sprites/Grass/IsoGrass.png" id="1_lwep3"]
+[ext_resource type="Shader" uid="uid://dog1e6odig8m3" path="res://Shaders/Terrain/Grass/GrassWave.gdshader" id="2_lwep3"]
+[ext_resource type="PackedScene" uid="uid://b73awd17bimcr" path="res://MapGen/Scenes/MapGenerator.tscn" id="3_s0oit"]
+[ext_resource type="Texture2D" uid="uid://57utqy4y6xq4" path="res://MapGen/Sprites/Grass/Grass3.png" id="4_s8o24"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s0oit"]
+shader = ExtResource("2_lwep3")
+shader_parameter/windCutoff = 8.0
+shader_parameter/windStrength = 1.0
+shader_parameter/windSpeed = 1.0
+shader_parameter/windDirection = 0.5
+
+[node name="Node2D" type="Node"]
+
+[node name="SpriteContainer" type="Node2D" parent="."]
+visible = false
+y_sort_enabled = true
+
+[node name="IsoGrass" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-16, -7)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass2" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-32, 1)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass8" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-48, 9)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass38" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-47, -7)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass3" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(0, 1)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass6" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(16, 9)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass31" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(16, -7)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass4" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-16, 9)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass43" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-16, -23)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass44" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(16, -23)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass5" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(0, 17)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass7" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-32, 17)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass9" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-16, 25)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass32" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-48, 25)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass10" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(0, 33)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass16" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-32, 33)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass17" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-64, 33)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass33" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-65, 17)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass37" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-63, 1)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass18" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-80, 25)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass34" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-80, 9)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass11" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(16, 25)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass13" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(32, 33)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass14" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(64, 33)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass19" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(80, 9)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass15" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(48, 25)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass22" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(80, 25)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass21" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(64, 17)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass20" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(48, 9)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass12" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(32, 17)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass23" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(32, 1)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass24" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(64, 1)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass25" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(80, -23)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass26" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(48, -7)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass27" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(80, -7)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass35" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-80, -23)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass36" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-80, -7)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass28" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(64, -15)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass29" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(48, -23)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass30" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(32, -15)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass39" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(0, -15)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass40" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-31, -15)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass41" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-63, -15)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass42" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-47, -23)
+texture = ExtResource("1_lwep3")
+
+[node name="Sprite2D" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(31, -6)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(53, -1)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D6" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(53, -12)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D7" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(47, -23)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D8" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(22, -18)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D9" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(33, -22)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D10" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(25, 6)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D11" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(17, -9)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D12" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(0, -3)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D13" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-26, 0)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D21" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-15, 3)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D22" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-36, 12)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D23" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-55, 8)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D24" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-23, 11)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D25" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-9, 9)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D26" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-11, -3)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D27" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(4, 10)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D28" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(21, 13)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D29" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(9, -7)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D14" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-13, -13)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D15" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(2, -17)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D16" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(9, 3)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D17" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-45, 3)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D18" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-41, -11)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D19" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-61, -12)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D20" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-70, 1)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(40, -6)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D4" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(44, 5)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D5" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(-28, -11)
+texture = ExtResource("4_s8o24")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Map Generator" parent="." instance=ExtResource("3_s0oit")]
+z_index = -1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(31, 19)
+zoom = Vector2(7.455, 7.455)

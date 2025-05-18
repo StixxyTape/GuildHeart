@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8xb88xxfl4rn"]
+
+[ext_resource type="Shader" uid="uid://dog1e6odig8m3" path="res://Shaders/Terrain/Grass/GrassWave.gdshader" id="2_lwep3"]
+[ext_resource type="Texture2D" uid="uid://gc6d2k6061g5" path="res://MapGen/Sprites/Grass/Grass1.png" id="3_lwep3"]
+[ext_resource type="PackedScene" uid="uid://b73awd17bimcr" path="res://MapGen/Scenes/MapGenerator.tscn" id="3_s0oit"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s0oit"]
+shader = ExtResource("2_lwep3")
+shader_parameter/rand = 1.0
+shader_parameter/witm = 1.0
+
+[node name="Node2D" type="Node"]
+
+[node name="Map Generator" parent="." instance=ExtResource("3_s0oit")]
+z_index = -1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(247, 148)
+zoom = Vector2(2.685, 2.685)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_s0oit")
+texture = ExtResource("3_lwep3")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true

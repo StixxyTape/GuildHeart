@@ -1,0 +1,643 @@
+[gd_scene load_steps=36 format=3 uid="uid://c8xb88xxfl4rn"]
+
+[ext_resource type="Texture2D" uid="uid://cgxwt5lhb7krr" path="res://MapGen/Sprites/Grass/IsoGrass.png" id="1_lwep3"]
+[ext_resource type="Shader" uid="uid://dog1e6odig8m3" path="res://Shaders/Terrain/Grass/GrassWave.gdshader" id="2_lwep3"]
+[ext_resource type="Texture2D" uid="uid://dphl7x4331hdn" path="res://MapGen/Sprites/Grass/Grass2.png" id="3_6we7b"]
+[ext_resource type="PackedScene" uid="uid://b73awd17bimcr" path="res://MapGen/Scenes/MapGenerator.tscn" id="3_s0oit"]
+[ext_resource type="Texture2D" uid="uid://unxxfuo0yiue" path="res://MapGen/Sprites/Grass/Tree.png" id="5_6we7b"]
+[ext_resource type="Texture2D" uid="uid://b6k0eah5gdoca" path="res://MapGen/Sprites/Grass/GrassGuy.png" id="5_8072m"]
+[ext_resource type="Texture2D" uid="uid://8hgppvachm6g" path="res://MapGen/Sprites/Grass/Moon.png" id="7_urjwv"]
+[ext_resource type="Shader" uid="uid://bo5j1s72qc64e" path="res://Shaders/Terrain/Water/Water.gdshader" id="8_u0ffn"]
+[ext_resource type="Script" uid="uid://bag0qmf83xa4v" path="res://Prototyping/GrassFairy.gd" id="9_urjwv"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u0ffn"]
+noise_type = 3
+seed = 235
+frequency = 0.1
+offset = Vector3(-101.05, -613.65, 0)
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_urjwv"]
+generate_mipmaps = false
+seamless = true
+seamless_blend_skirt = 0.5
+noise = SubResource("FastNoiseLite_u0ffn")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_urjwv"]
+noise_type = 3
+frequency = 0.1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wfo3m"]
+seamless = true
+seamless_blend_skirt = 0.5
+noise = SubResource("FastNoiseLite_urjwv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wfo3m"]
+shader = ExtResource("8_u0ffn")
+shader_parameter/noiseResolution = 512.0
+shader_parameter/screenReflectionOffset = 0.205
+shader_parameter/noise = SubResource("NoiseTexture2D_urjwv")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_wfo3m")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ti6hs"]
+size = Vector2(800, 200)
+
+[sub_resource type="Shader" id="Shader_u0ffn"]
+code = "shader_type canvas_item;
+
+uniform float windCutoff = 11.0; //8.0
+uniform float windStrength = 0.5; //1.0
+uniform float windSpeed = 2.0; //1.0
+uniform float windDirection = 0.2; //0.5
+
+varying vec2 worldPos;
+
+varying float worldOffset;
+
+void vertex() {
+    worldPos = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+	worldOffset = sin(worldPos.x);
+}
+
+void fragment() {
+
+	float xResolution = (1.0 / TEXTURE_PIXEL_SIZE.x);
+	float yResolution = (1.0 / TEXTURE_PIXEL_SIZE.y);
+	vec2 fixed_uv = UV;
+
+	float windOffset = round(
+		((windDirection * TEXTURE_PIXEL_SIZE.x) + windStrength * sin(
+			windSpeed * TIME + round((UV.y * yResolution) + 0.5) / yResolution * (worldOffset * 2.0)
+			) * TEXTURE_PIXEL_SIZE.x)
+ 		* (round((1.0 - (fixed_uv.y - (TEXTURE_PIXEL_SIZE.y * windCutoff)))))
+		* (round((1.0 - fixed_uv.y) * (yResolution / 4.0) * 2.0))
+		* xResolution) / xResolution;
+
+	fixed_uv.x += windOffset;
+
+	vec4 pixel_color = textureLod( TEXTURE, fixed_uv, 0.0 );
+
+	COLOR = pixel_color;
+
+	COLOR.r += windOffset * 0.15;
+	COLOR.g += windOffset * 0.15;
+	COLOR.b += windOffset * 0.15;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_urjwv"]
+shader = SubResource("Shader_u0ffn")
+shader_parameter/windCutoff = 11.0
+shader_parameter/windStrength = 0.25
+shader_parameter/windSpeed = 1.0
+shader_parameter/windDirection = 0.25
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s0oit"]
+shader = ExtResource("2_lwep3")
+shader_parameter/windCutoff = 8.0
+shader_parameter/windStrength = 1.0
+shader_parameter/windSpeed = 1.0
+shader_parameter/windDirection = 0.5
+
+[sub_resource type="Gradient" id="Gradient_wfo3m"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.233766, 0.279221, 0.461039, 0.519481, 0.701299, 0.753247, 0.883117, 0.935065)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0.699653, 0.699654, 0.699653, 1, 0.698039, 0.698039, 0.698039, 1, 0.549747, 0.549747, 0.549747, 1, 0.54902, 0.54902, 0.54902, 1, 0.282302, 0.282302, 0.282302, 1, 0.282353, 0.282353, 0.282353, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ti6hs"]
+gradient = SubResource("Gradient_wfo3m")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.505, 0)
+
+[sub_resource type="Gradient" id="Gradient_ti6hs"]
+offsets = PackedFloat32Array(0, 0.935065)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gliqt"]
+gradient = SubResource("Gradient_ti6hs")
+width = 1024
+height = 1024
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.505, 0)
+
+[sub_resource type="Gradient" id="Gradient_urjwv"]
+colors = PackedColorArray(0.0313726, 0.0745098, 0.12549, 1, 0.0313726, 0.0745098, 0.12549, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wfo3m"]
+gradient = SubResource("Gradient_urjwv")
+width = 1024
+height = 512
+
+[sub_resource type="Gradient" id="Gradient_6we7b"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u0ffn"]
+gradient = SubResource("Gradient_6we7b")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.505, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ti6hs"]
+size = Vector2(4, 4)
+
+[sub_resource type="Shader" id="Shader_urjwv"]
+code = "shader_type spatial;
+
+uniform float noiseResolution;
+
+uniform sampler2D noise : filter_nearest, repeat_enable;
+uniform sampler2D noise2 : filter_nearest, repeat_enable;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_nearest_mipmap;
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+    float y = 1.0 - uv.y;
+	y += 0.625;
+	vec4 testVec = vec4(texture(SCREEN_TEXTURE, vec2(uv.x, y)));
+	ALBEDO = vec3(testVec.r, testVec.g, testVec.b);
+
+	float noiseColourThing = 5.5;
+	vec2 noiseUV = UV;
+	noiseUV.y += (0.125);
+	noiseUV.x = round(noiseUV.x * 32.0);
+	noiseUV.y = round(noiseUV.y * 64.0);
+	//noiseUV.y = round(noiseUV.y * 2.0);
+
+	float speedOffset = 1.0;
+
+	speedOffset = ((noiseUV.y + 128.0) / 128.0 / 4.0);
+
+	vec4 noiseText = mix(
+		texture(noise, (1.0/(noiseResolution / 4.0)) * noiseUV + vec2((TIME * speedOffset * 8.0 * (1.0/(noiseResolution / 4.0))), 0)),
+		texture(noise2, (1.0/(noiseResolution / 4.0)) * noiseUV + vec2((TIME * speedOffset * 8.0 * (1.0/(noiseResolution / 4.0))))),
+		0.03);
+
+	if (noiseText.r < 0.5){
+		//noiseText.r = 0.5;
+	}
+
+	noiseText.r = round((noiseText.r - 0.1) * noiseColourThing) / noiseColourThing;
+	if (noiseText.r > 0.7){
+		noiseText.r *= 4.0;
+	}
+	noiseText.g = noiseText.r;
+	noiseText.b = noiseText.r;
+	
+	ALBEDO = mix(ALBEDO, vec3(noiseText.r, noiseText.g, noiseText.b), 0.5);
+	
+	float colourThing = 20.0;
+
+	ALBEDO.r = round(ALBEDO.r * colourThing) / colourThing;
+	ALBEDO.g = (round(ALBEDO.g * colourThing) / colourThing);
+	ALBEDO.b = (round(ALBEDO.b * colourThing) / colourThing);
+
+	ALBEDO.b += (UV.y / 32.0);
+
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wfo3m"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ti6hs"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_wfo3m")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gliqt"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rjwvq"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_gliqt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gliqt"]
+render_priority = 0
+shader = SubResource("Shader_urjwv")
+shader_parameter/noiseResolution = 128.0
+shader_parameter/noise = SubResource("NoiseTexture2D_ti6hs")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_rjwvq")
+
+[sub_resource type="BoxMesh" id="BoxMesh_urjwv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfo3m"]
+albedo_color = Color(0.736164, 0.61341, 0, 1)
+
+[node name="Node2D" type="Node"]
+
+[node name="SpriteContainer" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(130, 30)
+
+[node name="Water" type="Sprite2D" parent="SpriteContainer"]
+z_index = 99
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_wfo3m")
+position = Vector2(207, 146)
+texture = SubResource("PlaceholderTexture2D_ti6hs")
+
+[node name="Sprite2D39" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(204, 7)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D40" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(69, 8)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D58" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(108, 15)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D59" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(293, 16)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D41" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(230, 8)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D42" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(133, 8)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D60" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(169, 16)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D61" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(261, 16)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D43" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(274, 6)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D44" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(185, 6)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D62" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(219, 14)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D63" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(308, 14)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D45" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(87, 6)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D46" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(20, 6)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D64" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(40, 16)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D65" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(154, 14)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D47" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(325, 8)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D48" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_urjwv")
+position = Vector2(247, 6)
+texture = ExtResource("5_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D66" type="Sprite2D" parent="SpriteContainer"]
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(348, 14)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="Sprite2D67" type="Sprite2D" parent="SpriteContainer"]
+z_index = 2
+material = SubResource("ShaderMaterial_s0oit")
+position = Vector2(374, 14)
+texture = ExtResource("3_6we7b")
+region_rect = Rect2(0, 0, 16, 16)
+region_filter_clip_enabled = true
+
+[node name="IsoGrass82" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(23, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass83" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(55, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass84" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(87, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass85" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(119, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass86" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(151, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass87" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(183, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass88" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(215, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass89" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(247, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass90" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(279, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass91" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(343, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass92" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(375, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass93" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(407, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass94" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(311, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass95" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-393, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass96" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-361, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass97" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-329, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass98" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-297, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass99" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-265, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass100" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-233, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass101" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-201, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass102" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-169, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass103" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-137, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass104" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-73, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass105" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-41, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass106" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-9, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass107" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(-105, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass108" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(439, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass109" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(471, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass110" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(503, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass111" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(535, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass112" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(567, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass113" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(599, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass114" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(631, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass115" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(663, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass116" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(695, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass117" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(759, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass118" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(791, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass119" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(823, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="IsoGrass120" type="Sprite2D" parent="SpriteContainer"]
+z_index = -1
+position = Vector2(727, 30)
+texture = ExtResource("1_lwep3")
+
+[node name="GrassGuy2" type="Sprite2D" parent="SpriteContainer"]
+visible = false
+position = Vector2(15, -14)
+texture = ExtResource("5_8072m")
+flip_h = true
+
+[node name="Moon" type="Sprite2D" parent="SpriteContainer"]
+light_mask = 2
+position = Vector2(201, -142)
+texture = ExtResource("7_urjwv")
+flip_h = true
+
+[node name="PointLight2D2" type="PointLight2D" parent="SpriteContainer/Moon"]
+color = Color(0.461372, 0.655187, 1, 1)
+energy = 0.5
+texture = SubResource("GradientTexture2D_ti6hs")
+
+[node name="PointLight2D3" type="PointLight2D" parent="SpriteContainer"]
+position = Vector2(201, -62)
+energy = 0.61
+blend_mode = 1
+texture = SubResource("GradientTexture2D_gliqt")
+
+[node name="BG" type="Sprite2D" parent="SpriteContainer"]
+z_index = -99
+position = Vector2(191, 26)
+texture = SubResource("GradientTexture2D_wfo3m")
+flip_h = true
+
+[node name="Map Generator" parent="." instance=ExtResource("3_s0oit")]
+z_index = -1
+position = Vector2(130, 30)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(329, 39)
+zoom = Vector2(3, 3)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(165, 36)
+texture = SubResource("GradientTexture2D_u0ffn")
+script = ExtResource("9_urjwv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999997, -0.00147885, 0.00163665, -0.00163541, 0.00082945, 0.999998, -0.00148022, -0.999999, 0.000827007, 0, 0, 0)
+mesh = SubResource("QuadMesh_ti6hs")
+surface_material_override/0 = SubResource("ShaderMaterial_gliqt")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999997, -0.00147885, 0.00163665, -0.00201304, -0.915187, 0.403024, 0.000901813, -0.403026, -0.915188, 0, 0, 6.67279)
+mesh = SubResource("QuadMesh_ti6hs")
+surface_material_override/0 = SubResource("ShaderMaterial_gliqt")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98394, 0, 2.10107)
+mesh = SubResource("BoxMesh_urjwv")
+surface_material_override/0 = SubResource("StandardMaterial3D_wfo3m")

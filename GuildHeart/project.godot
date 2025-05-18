@@ -11,13 +11,23 @@ config_version=5
 [application]
 
 config/name="GuildHeart"
-run/main_scene="uid://72g1f4vr1trg"
+run/main_scene="uid://c8xb88xxfl4rn"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Global="*res://Global/Global.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+
+[editor]
+
+movie_writer/movie_file="C:/Users/jobul/Desktop/Footage.avi"
 
 [input]
 
@@ -39,4 +49,6 @@ TEST3={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.522589, 0.668482, 0.835309, 1)

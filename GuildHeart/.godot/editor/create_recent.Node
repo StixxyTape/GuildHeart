@@ -1,4 +1,14 @@
+MeshInstance3D
+PointLight2D
+Sprite2D
+WorldEnvironment
+Node2D
 Node
-VBoxContainer
 Camera2D
-Timer
+MultiMeshInstance3D
+Sprite3D
+DirectionalLight3D
+CPUParticles3D
+CPUParticles2D
+SpotLight3D
+Camera3D
